@@ -27,48 +27,64 @@ const modal=document.querySelector('.modal'),title=document.querySelector('#moda
 cat=document.querySelector('#modalCat'),desc=document.querySelector('#modalDesc'),
 tags=document.querySelector('#modalTags'),stage=document.querySelector('#carouselStage'),
 dots=document.querySelector('#carouselDots'),counter=document.querySelector('#carouselCounter');
-let currentImages=[],currentIndex=0;
+let currentImages=[],currentIndex=0,currentGalleryBaseUrl='';
 
 function renderCarousel(baseUrl){
+  if(baseUrl) currentGalleryBaseUrl=baseUrl;
   carouselStage.innerHTML="";
   currentImages.forEach((media,i)=>{
-    const src=new URL(media.name,baseUrl).href;
+    const src=new URL(media.name,currentGalleryBaseUrl).href;
     let el;
     if(media.type==="video"){
       el=document.createElement("video");
-      el.controls=true; el.playsInline=true; el.preload="metadata";
+      el.controls=true;
+      el.playsInline=true;
+      el.preload="metadata";
     }else{
       el=document.createElement("img");
       el.alt="Proyecto — imagen "+(i+1);
     }
-    el.className="carousel-image"+(i===0?" active":"");
+    el.className="carousel-image"+(i===currentIndex?" active":"");
     el.src=src;
-    el.onerror=()=>console.warn("No se pudo cargar:",src);
+    el.onerror=()=>console.warn("No se pudo cargar el archivo:",src);
     carouselStage.appendChild(el);
   });
   updateCarousel();
 }
-async async function loadProjectGallery(folder){
-  currentImages=[]; currentIndex=0;
-  const projectUrl=new URL(String(folder).replace(/^\/+/,"").replace(/\/+$/,"")+"/",document.baseURI);
+async function loadProjectGallery(folder){
+  currentImages=[];
+  currentIndex=0;
+
+  const projectUrl=new URL(
+    String(folder).replace(/^\/+/,"").replace(/\/+$/,"")+"/",
+    document.baseURI
+  );
+  currentGalleryBaseUrl=projectUrl.href;
+
   const manifestUrl=new URL("gallery.json",projectUrl);
+
   try{
     const response=await fetch(manifestUrl.href+"?v="+Date.now(),{cache:"no-store"});
     if(!response.ok) throw new Error("HTTP "+response.status);
+
     const manifest=await response.json();
     const images=Array.isArray(manifest.images)?manifest.images:[];
     const videos=Array.isArray(manifest.videos)?manifest.videos:[];
+
     currentImages=[
       ...images.map(name=>({name:String(name),type:"image"})),
       ...videos.map(name=>({name:String(name),type:"video"}))
     ].filter(x=>x.name.trim()!=="");
-    renderCarousel(projectUrl.href);
-    if(!currentImages.length) carouselStage.innerHTML='<div class="carousel-empty"><strong>Este proyecto no tiene contenido todavía.</strong><br><small>Añade los nombres de tus archivos en gallery.json.</small></div>';
-    carouselModal.classList.add("open");
+
+    renderCarousel(currentGalleryBaseUrl);
+
+    if(!currentImages.length){
+      carouselStage.innerHTML='<div class="carousel-empty"><strong>Este proyecto no tiene contenido todavía.</strong><br><small>Añade los nombres de tus archivos en gallery.json.</small></div>';
+    }
+
   }catch(error){
     console.error("Error cargando gallery.json:",error,manifestUrl.href);
     carouselStage.innerHTML='<div class="carousel-empty"><strong>No se pudo cargar gallery.json</strong><br><small>Ruta comprobada: '+manifestUrl.pathname+'</small></div>';
-    carouselModal.classList.add("open");
   }
 }
 document.querySelectorAll('[data-cover]').forEach(el=>{
@@ -76,9 +92,9 @@ document.querySelectorAll('[data-cover]').forEach(el=>{
 });
 document.querySelectorAll('[data-project]').forEach(el=>el.addEventListener('click',()=>{
  const p=data[el.dataset.project];title.textContent=p[0];cat.textContent=p[1];desc.textContent=p[2];tags.innerHTML=p[3].map(x=>`<span>${x}</span>`).join('');
- loadProjectGallery(p[4]);modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
+ modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';loadProjectGallery(p[4]);
 }));
-function moveCarousel(d){if(!currentImages.length)return;currentIndex=(currentIndex+d+currentImages.length)%currentImages.length;renderCarousel();}
+function moveCarousel(d){if(!currentImages.length)return;currentIndex=(currentIndex+d+currentImages.length)%currentImages.length;renderCarousel(currentGalleryBaseUrl);}
 document.querySelector('.carousel-arrow.prev').onclick=e=>{e.stopPropagation();moveCarousel(-1)};
 document.querySelector('.carousel-arrow.next').onclick=e=>{e.stopPropagation();moveCarousel(1)};
 function close(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.style.overflow='';}

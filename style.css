@@ -428,7 +428,7 @@ footer{border-top:1px solid var(--line);padding:28px var(--pad);display:flex;jus
   z-index:1;
 }
 
-.project-cover > span,.project-cover > strong{display:none!important}.carousel-image{max-width:100%;max-height:100%;width:auto!important;height:auto!important;object-fit:contain;display:none}.carousel-image.active{display:block}.carousel-stage video.carousel-image.active{background:#000}
+.project-cover > span,.project-cover > strong{display:none!important}.carousel-image{max-width:100%;max-height:100%;width:auto!important;height:auto!important;object-fit:contain;display:none}.carousel-image.active{display:block}.carousel-stage video.carousel-image.active{background:#000}.carousel-image.external-video-link.active{display:flex}
 
 
 /* External video links inside project carousels */

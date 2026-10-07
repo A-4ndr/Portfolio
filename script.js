@@ -32,140 +32,44 @@ let currentImages=[],currentIndex=0;
 function renderCarousel(baseUrl){
   carouselStage.innerHTML="";
   currentImages.forEach((media,i)=>{
-    const src = new URL(media.name, baseUrl).href;
+    const src=new URL(media.name,baseUrl).href;
     let el;
-
     if(media.type==="video"){
       el=document.createElement("video");
-      el.controls=true;
-      el.playsInline=true;
-      el.preload="metadata";
+      el.controls=true; el.playsInline=true; el.preload="metadata";
     }else{
       el=document.createElement("img");
       el.alt="Proyecto — imagen "+(i+1);
     }
-
     el.className="carousel-image"+(i===0?" active":"");
     el.src=src;
+    el.onerror=()=>console.warn("No se pudo cargar:",src);
     carouselStage.appendChild(el);
   });
   updateCarousel();
 }
-async function loadProjectGallery(folder){
-  currentImages=[];
-  currentIndex=0;
-
-  const cleanFolder = String(folder || "").replace(/^\/+|\/+$/g,"") + "/";
-  const baseUrl = new URL(cleanFolder, document.baseURI);
-  const manifestUrl = new URL("gallery.json", baseUrl);
-
-  // Normal mode: GitHub Pages / local HTTP server.
+async async function loadProjectGallery(folder){
+  currentImages=[]; currentIndex=0;
+  const projectUrl=new URL(String(folder).replace(/^\/+/,"").replace(/\/+$/,"")+"/",document.baseURI);
+  const manifestUrl=new URL("gallery.json",projectUrl);
   try{
-    const response = await fetch(manifestUrl.href, {
-      cache:"no-store",
-      headers:{ "Accept":"application/json" }
-    });
-
-    if(response.ok){
-      const manifest = await response.json();
-      return showGalleryManifest(manifest, baseUrl.href);
-    }
-    throw new Error("HTTP " + response.status);
+    const response=await fetch(manifestUrl.href+"?v="+Date.now(),{cache:"no-store"});
+    if(!response.ok) throw new Error("HTTP "+response.status);
+    const manifest=await response.json();
+    const images=Array.isArray(manifest.images)?manifest.images:[];
+    const videos=Array.isArray(manifest.videos)?manifest.videos:[];
+    currentImages=[
+      ...images.map(name=>({name:String(name),type:"image"})),
+      ...videos.map(name=>({name:String(name),type:"video"}))
+    ].filter(x=>x.name.trim()!=="");
+    renderCarousel(projectUrl.href);
+    if(!currentImages.length) carouselStage.innerHTML='<div class="carousel-empty"><strong>Este proyecto no tiene contenido todavía.</strong><br><small>Añade los nombres de tus archivos en gallery.json.</small></div>';
+    carouselModal.classList.add("open");
   }catch(error){
-    console.warn("No se pudo leer gallery.json mediante fetch:", error);
-
-    // file:// mode: browsers commonly block fetch() for local JSON.
-    // Try XHR as a second option.
-    if(location.protocol === "file:"){
-      try{
-        const manifest = await readLocalJson(manifestUrl.href);
-        return showGalleryManifest(manifest, baseUrl.href);
-      }catch(xhrError){
-        console.warn("Lectura local bloqueada:", xhrError);
-        showLocalGalleryHelp(folder, baseUrl.href);
-        return;
-      }
-    }
-
-    carouselStage.innerHTML = `
-      <div class="carousel-empty">
-        <strong>No se pudo cargar gallery.json</strong><br>
-        <small>Comprueba que el archivo esté dentro de la carpeta del proyecto.</small>
-      </div>`;
+    console.error("Error cargando gallery.json:",error,manifestUrl.href);
+    carouselStage.innerHTML='<div class="carousel-empty"><strong>No se pudo cargar gallery.json</strong><br><small>Ruta comprobada: '+manifestUrl.pathname+'</small></div>';
     carouselModal.classList.add("open");
   }
-}
-
-function readLocalJson(url){
-  return new Promise((resolve,reject)=>{
-    const xhr=new XMLHttpRequest();
-    xhr.open("GET",url,true);
-    xhr.overrideMimeType("application/json");
-    xhr.onload=()=>{
-      if(xhr.status===0 || (xhr.status>=200 && xhr.status<300)){
-        try{ resolve(JSON.parse(xhr.responseText)); }
-        catch(e){ reject(e); }
-      }else reject(new Error("HTTP "+xhr.status));
-    };
-    xhr.onerror=()=>reject(new Error("El navegador bloqueó el acceso local."));
-    xhr.send();
-  });
-}
-
-function showGalleryManifest(manifest, baseHref){
-  const images=Array.isArray(manifest.images)?manifest.images:[];
-  const videos=Array.isArray(manifest.videos)?manifest.videos:[];
-
-  currentImages=[
-    ...images.map(name=>({name:String(name),type:"image"})),
-    ...videos.map(name=>({name:String(name),type:"video"}))
-  ].filter(item=>item.name.trim()!=="");
-
-  renderCarousel(baseHref);
-
-  if(!currentImages.length){
-    carouselStage.innerHTML='<div class="carousel-empty">Añade imágenes o vídeos en <strong>gallery.json</strong>.</div>';
-  }
-
-  carouselModal.classList.add("open");
-}
-
-function showLocalGalleryHelp(folder, baseHref){
-  carouselStage.innerHTML=`
-    <div class="carousel-empty local-gallery-help">
-      <strong>Vista local</strong>
-      <p>Tu navegador está bloqueando la lectura automática de <code>gallery.json</code> al abrir la web con doble clic.</p>
-      <p>Puedes seleccionar el <strong>gallery.json</strong> de este proyecto para cargarlo.</p>
-      <button type="button" class="local-gallery-button" id="chooseGalleryJson">Seleccionar gallery.json</button>
-      <input type="file" id="galleryJsonPicker" accept=".json,application/json" hidden>
-    </div>`;
-
-  carouselModal.classList.add("open");
-
-  const button=document.getElementById("chooseGalleryJson");
-  const picker=document.getElementById("galleryJsonPicker");
-
-  button.onclick=()=>picker.click();
-
-  picker.onchange=async()=>{
-    const file=picker.files && picker.files[0];
-    if(!file) return;
-
-    try{
-      const text=await file.text();
-      const manifest=JSON.parse(text);
-
-      // The selected gallery.json belongs to the project currently opened.
-      // Media files are resolved relative to that project's folder.
-      showGalleryManifest(manifest, baseHref);
-    }catch(e){
-      carouselStage.innerHTML=`
-        <div class="carousel-empty">
-          <strong>gallery.json no es válido</strong><br>
-          <small>Comprueba que tenga el formato JSON correcto.</small>
-        </div>`;
-    }
-  };
 }
 document.querySelectorAll('[data-cover]').forEach(el=>{
  const img=document.createElement('img');img.src=el.dataset.cover;img.alt='';img.className='project-cover-image';img.onerror=()=>img.remove();el.prepend(img);

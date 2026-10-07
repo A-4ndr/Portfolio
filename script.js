@@ -71,25 +71,81 @@ document.addEventListener('keydown', function(e){
 function renderCarousel(baseUrl){
   if(baseUrl) currentGalleryBaseUrl=baseUrl;
   carouselStage.innerHTML="";
+
   currentImages.forEach((media,i)=>{
-    const src=new URL(media.name,currentGalleryBaseUrl).href;
-    let el;
-    if(media.type==="video"){
-      el=document.createElement("video");
-      el.controls=true;
-      el.playsInline=true;
-      el.preload="metadata";
-    }else{
-      el=document.createElement("img");
-      el.alt="Proyecto — imagen "+(i+1);
+    const wrapper=document.createElement("div");
+    wrapper.className="carousel-media"+(i===currentIndex?" active":"");
+
+    if(media.type==="image"){
+      const img=document.createElement("img");
+      img.alt="Proyecto — imagen "+(i+1);
+      img.className="carousel-image";
+      img.src=new URL(media.name,currentGalleryBaseUrl).href;
+      img.loading=i===0?"eager":"lazy";
+      img.title="Haz clic para ampliar";
+      img.addEventListener("click",e=>{
+        e.stopPropagation();
+        openImageLightbox(img.src,img.alt);
+      });
+      wrapper.appendChild(img);
+    }else if(media.type==="video"){
+      if(media.external && media.url){
+        const link=document.createElement("a");
+        link.className="external-video-link";
+        link.href=media.url;
+        link.target="_blank";
+        link.rel="noopener noreferrer";
+        link.innerHTML='<span class="external-video-play">▶</span><span class="external-video-title">'+escapeHtml(media.name||"Ver vídeo completo")+'</span><span class="external-video-subtitle">Abrir vídeo completo</span>';
+        wrapper.appendChild(link);
+      }else{
+        const video=document.createElement("video");
+        video.controls=true;
+        video.playsInline=true;
+        video.preload="metadata";
+        video.className="carousel-image";
+        video.src=new URL(media.name,currentGalleryBaseUrl).href;
+        wrapper.appendChild(video);
+      }
     }
-    el.className="carousel-image"+(i===currentIndex?" active":"");
-    el.src=src;
-    el.onerror=()=>console.warn("No se pudo cargar el archivo:",src);
-    carouselStage.appendChild(el);
+    carouselStage.appendChild(wrapper);
   });
   updateCarousel();
 }
+
+function escapeHtml(value){
+  return String(value).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
+
+function openImageLightbox(src,alt){
+  let lightbox=document.getElementById("imageLightbox");
+  if(!lightbox){
+    lightbox=document.createElement("div");
+    lightbox.id="imageLightbox";
+    lightbox.className="image-lightbox";
+    lightbox.innerHTML='<button class="image-lightbox-close" aria-label="Cerrar">×</button><img class="image-lightbox-image" alt="">';
+    document.body.appendChild(lightbox);
+    lightbox.addEventListener("click",e=>{
+      if(e.target===lightbox || e.target.classList.contains("image-lightbox-close")) closeImageLightbox();
+    });
+  }
+  const image=lightbox.querySelector(".image-lightbox-image");
+  image.src=src;
+  image.alt=alt||"";
+  lightbox.classList.add("open");
+  document.body.style.overflow="hidden";
+}
+
+function closeImageLightbox(){
+  const lightbox=document.getElementById("imageLightbox");
+  if(lightbox){
+    lightbox.classList.remove("open");
+    document.body.style.overflow="";
+  }
+}
+
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape") closeImageLightbox();
+});
 async function loadProjectGallery(folder){
   currentImages=[];
   currentIndex=0;
@@ -99,7 +155,6 @@ async function loadProjectGallery(folder){
     document.baseURI
   );
   currentGalleryBaseUrl=projectUrl.href;
-
   const manifestUrl=new URL("gallery.json",projectUrl);
 
   try{
@@ -112,7 +167,20 @@ async function loadProjectGallery(folder){
 
     currentImages=[
       ...images.map(name=>({name:String(name),type:"image"})),
-      ...videos.map(name=>({name:String(name),type:"video"}))
+      ...videos.map(video=>{
+        if(typeof video==="string"){
+          return {name:String(video),type:"video",external:false};
+        }
+        if(video && typeof video==="object" && video.url){
+          return {
+            name:String(video.name||"Vídeo"),
+            type:"video",
+            external:true,
+            url:String(video.url)
+          };
+        }
+        return null;
+      }).filter(Boolean)
     ].filter(x=>x.name.trim()!=="");
 
     renderCarousel(currentGalleryBaseUrl);
@@ -120,22 +188,12 @@ async function loadProjectGallery(folder){
     if(!currentImages.length){
       carouselStage.innerHTML='<div class="carousel-empty"><strong>Este proyecto no tiene contenido todavía.</strong><br><small>Añade los nombres de tus archivos en gallery.json.</small></div>';
     }
-
   }catch(error){
     console.error("Error cargando gallery.json:",error,manifestUrl.href);
     carouselStage.innerHTML='<div class="carousel-empty"><strong>No se pudo cargar gallery.json</strong><br><small>Ruta comprobada: '+manifestUrl.pathname+'</small></div>';
   }
 }
-document.querySelectorAll('[data-cover]').forEach(el=>{
- const img=document.createElement('img');img.src=el.dataset.cover;img.alt='';img.className='project-cover-image';img.onerror=()=>img.remove();el.prepend(img);
-});
-document.querySelectorAll('[data-project]').forEach(el=>el.addEventListener('click',()=>{
- const p=data[el.dataset.project];title.textContent=p[0];cat.textContent=p[1];desc.textContent=p[2];tags.innerHTML=p[3].map(x=>`<span>${x}</span>`).join('');
- modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';loadProjectGallery(p[4]);
-}));
-function moveCarousel(d){if(!currentImages.length)return;currentIndex=(currentIndex+d+currentImages.length)%currentImages.length;renderCarousel(currentGalleryBaseUrl);}
-document.querySelector('.carousel-arrow.prev').onclick=e=>{e.stopPropagation();moveCarousel(-1)};
-document.querySelector('.carousel-arrow.next').onclick=e=>{e.stopPropagation();moveCarousel(1)};
+
 function close(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.style.overflow='';}
 document.querySelector('.close').onclick=close;document.querySelector('.backdrop').onclick=close;
 document.addEventListener('keydown',e=>{if(e.key==='Escape')close();if(e.key==='ArrowLeft')moveCarousel(-1);if(e.key==='ArrowRight')moveCarousel(1);});

@@ -17,8 +17,8 @@ const data={
 
   pieza1:['Copa Airlines','Pieza gráfica','Pieza gráfica desarrollada para comunicación visual.',['Illustrator','Photoshop','Diseño'],'images/proyectos/piezas-graficas/copa-airlines/'],
   pieza2:['Cali se Mueve','Pieza gráfica','Piezas de comunicación vinculadas al proyecto Cali se Mueve.',['Diseño','Comunicación'],'images/proyectos/piezas-graficas/cali-se-mueve/'],
-  pieza3:['Impresión','Pieza gráfica','Proyecto centrado en diseño y composición para impresión.',['Diseño gráfico','Impresión'],'images/proyectos/piezas-graficas/impresion/'],
-  pieza4:['Tanuki Creativo','Pieza gráfica','Piezas de identidad y comunicación para Tanuki Creativo.',['Branding','Identidad','Diseño'],'images/proyectos/piezas-graficas/tanuki-creativo/'],
+  pieza3:['Real Steel','Pieza gráfica','Proyecto centrado en diseño y composición para impresión.',['Diseño gráfico','Impresión'],'images/proyectos/piezas-graficas/impresion/'],
+  pieza4:['Logos','Pieza gráfica','Piezas de identidad y comunicación para Tanuki Creativo.',['Branding','Identidad','Diseño'],'images/proyectos/piezas-graficas/tanuki-creativo/'],
 
   illu1:['One Line, One Story','Ilustración digital','Proyecto de ilustración digital y exploración gráfica.',['Digital Art','Ilustración'],'images/proyectos/ilustracion/one-line-one-story/'],
   illu2:['Character Design','Character design','Diseño y desarrollo visual de personajes.',['Character Design','Digital Art'],'images/proyectos/ilustracion/character-design/']

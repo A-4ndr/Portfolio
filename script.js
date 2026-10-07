@@ -9,7 +9,7 @@ const data={
 
   video1:['La Ouija','Vídeo / Postproducción','Proyecto audiovisual de edición y postproducción.',['Premiere Pro','After Effects','Color'],'images/proyectos/video/la-ouija/'],
   video2:['BreackDance','Edición','Proyecto audiovisual centrado en ritmo, montaje y narrativa.',['Premiere Pro','Edición'],'images/proyectos/video/breackdance/'],
-  video3:['Graduación Medicina','Edición','Proyecto audiovisual de graduación y edición de vídeo.',['Premiere Pro','Edición'],'images/proyectos/video/graduacion-medicina/'],
+  video3:['Boda','Edición','Proyecto audiovisual de graduación y edición de vídeo.',['Premiere Pro','Edición'],'images/proyectos/video/graduacion-medicina/'],
 
   imagen1:['Memories of Love','Edición de imagen','Proyecto de tratamiento y edición fotográfica.',['Photoshop','Retoque'],'images/proyectos/edicion-imagen/memories-of-love/'],
   imagen2:['Sons of Zeus','Edición de imagen','Proyecto de transformación y tratamiento visual.',['Photoshop','Color'],'images/proyectos/edicion-imagen/sons-of-zeus/'],
@@ -21,13 +21,52 @@ const data={
   pieza4:['Logos','Pieza gráfica','Piezas de identidad y comunicación para Tanuki Creativo.',['Branding','Identidad','Diseño'],'images/proyectos/piezas-graficas/tanuki-creativo/'],
 
   illu1:['One Line, One Story','Ilustración digital','Proyecto de ilustración digital y exploración gráfica.',['Digital Art','Ilustración'],'images/proyectos/ilustracion/one-line-one-story/'],
-  illu2:['Character Design','Character design','Diseño y desarrollo visual de personajes.',['Character Design','Digital Art'],'images/proyectos/ilustracion/character-design/']
+  illu2:['Space Love','Character design','Diseño y desarrollo visual de personajes.',['Space Love','Digital Art'],'images/proyectos/ilustracion/character-design/']
 };
 const modal=document.querySelector('.modal'),title=document.querySelector('#modalTitle'),
 cat=document.querySelector('#modalCat'),desc=document.querySelector('#modalDesc'),
 tags=document.querySelector('#modalTags'),stage=document.querySelector('#carouselStage'),
 dots=document.querySelector('#carouselDots'),counter=document.querySelector('#carouselCounter');
 let currentImages=[],currentIndex=0,currentGalleryBaseUrl='';
+
+
+function openImageLightbox(src, alt){
+  let lightbox = document.getElementById('imageLightbox');
+
+  if(!lightbox){
+    lightbox = document.createElement('div');
+    lightbox.id = 'imageLightbox';
+    lightbox.className = 'image-lightbox';
+    lightbox.innerHTML =
+      '<button class="image-lightbox-close" aria-label="Cerrar">×</button>' +
+      '<img class="image-lightbox-image" alt="">';
+    document.body.appendChild(lightbox);
+
+    lightbox.addEventListener('click', function(e){
+      if(e.target === lightbox || e.target.classList.contains('image-lightbox-close')){
+        closeImageLightbox();
+      }
+    });
+  }
+
+  const image = lightbox.querySelector('.image-lightbox-image');
+  image.src = src;
+  image.alt = alt || '';
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeImageLightbox(){
+  const lightbox = document.getElementById('imageLightbox');
+  if(lightbox){
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape') closeImageLightbox();
+});
 
 function renderCarousel(baseUrl){
   if(baseUrl) currentGalleryBaseUrl=baseUrl;

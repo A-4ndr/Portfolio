@@ -208,6 +208,16 @@ async function loadProjectGallery(folder){
       }).filter(Boolean)
     ].filter(x=>x.name.trim()!=='');
 
+    // Nombres y enlaces definitivos de La Ouija. Se fuerzan aquí para que
+    // una copia antigua de gallery.json no pueda recuperar los nombres anteriores.
+    if(/\/la-ouija\/$/i.test(projectUrl.pathname)){
+      currentImages=[
+        {name:'La Ouija Intro',type:'video',external:true,url:'https://drive.google.com/file/d/1GK9CMX-ApqysoYA80IEnJEMY5uJtZqLn/view?usp=sharing'},
+        {name:'La Ouija Noticiero',type:'video',external:true,url:'https://drive.google.com/file/d/165Ctzg5DgLSLGR997Vw74OyUGyj_l84y/view?usp=sharing'},
+        {name:'La Ouija Creditos',type:'video',external:true,url:'https://drive.google.com/file/d/1HOO0teJELKM7g-oaU1C1oxqmXMq5IKsc/view?usp=sharing'}
+      ];
+    }
+
     if(!currentImages.length){
       stage.innerHTML='<div class="carousel-empty"><strong>Este proyecto no tiene contenido todavía.</strong><br><small>Añade los nombres de tus archivos en gallery.json.</small></div>';
       updateCarousel();

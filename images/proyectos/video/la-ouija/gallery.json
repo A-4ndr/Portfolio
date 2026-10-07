@@ -1,4 +1,17 @@
 {
   "images": [],
-  "videos": []
+  "videos": [
+    {
+      "name": "La Ouija — Parte 1",
+      "url": "https://drive.google.com/file/d/1GK9CMX-ApqysoYA80IEnJEMY5uJtZqLn/view?usp=sharing"
+    },
+    {
+      "name": "La Ouija — Parte 2",
+      "url": "https://drive.google.com/file/d/165Ctzg5dGlsLGR997Vw74OyUGyj_l84y/view?usp=sharing"
+    },
+    {
+      "name": "La Ouija — Parte 3",
+      "url": "https://drive.google.com/file/d/1HOO0teJELKM7g-oaU1C1oxqmXMq5IKsc/view?usp=sharing"
+    }
+  ]
 }

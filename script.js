@@ -6,9 +6,33 @@ const data={
   foto1:{title:'Savaje',category:'Fotomontaje / 2026',description:'Proyecto personal desarrollado como una exploración de diferentes estilos visuales disruptivos, planteados como representación de una etapa creativa y conceptual para un posible álbum musical.',contribution:'Conceptualización · Diseño gráfico · Fotografía · Edición · Retoque · Montaje',software:'Photoshop · Lightroom',concept:`Savaje comenzó como un proyecto personal basado en imaginar cómo podría ser la portada de un álbum musical disruptivo. La propuesta busca representar el comienzo de una nueva etapa, utilizando una estética visual que rompe con lo convencional y transmite la sensación de estar ante el inicio de algo diferente.`,folder:'images/proyectos/fotomontaje/savaje/'},
   foto2:{title:'The Life is a Videogame',category:'Fotomontaje / 2026',description:'Proyecto personal que busca representar la tranquilidad y las diferentes experiencias que podría llegar a experimentar una persona al vivir dentro de un videojuego.',contribution:'Conceptualización · Diseño gráfico · Fotografía · Edición · Retoque · Montaje',software:'Photoshop · Lightroom · Illustrator',concept:`El proyecto nace de la curiosidad por imaginar cómo podrían sentirse los personajes que habitan los mundos de ficción de los videojuegos. A partir de esta idea, se plantea trasladar a una persona del mundo real a un universo inanimado, creando un contraste entre ambos mundos y explorando cómo sería experimentar la realidad desde la perspectiva de un videojuego.`,folder:'images/proyectos/fotomontaje/the-life-is-a-videogame/'},
   foto3:{title:'Outside the Frame',category:'Fotomontaje / 2026',description:'Proyecto personal que plantea la idea de salir del marco establecido por los modelos y estándares que determinan cómo debería ser algo, buscando romper con lo establecido y salir del molde.',contribution:'Conceptualización · Diseño gráfico · Fotografía · Edición · Retoque · Montaje',software:'Photoshop · Lightroom',concept:`Outside the Frame comenzó como un proyecto personal basado en la idea de salir literalmente del molde impuesto por el mundo de las redes sociales. La propuesta busca representar visualmente esa ruptura con los límites establecidos, llevando el concepto un paso más allá y planteando una imagen que sobresale y se sitúa por encima del propio marco que intenta contenerla.`,folder:'images/proyectos/fotomontaje/outside-the-frame/'},
-  video1:['La Ouija','Vídeo / Postproducción','Proyecto audiovisual de edición y postproducción.',['Premiere Pro','After Effects','Color'],'images/proyectos/video/la-ouija/'],
-  video2:['BreakDance','Edición','Proyecto audiovisual centrado en ritmo, montaje y narrativa.',['Premiere Pro','Edición'],'images/proyectos/video/breakdance/'],
-  video3:['Boda','Edición','Proyecto audiovisual de boda y edición de vídeo.',['Premiere Pro','Edición'],'images/proyectos/video/graduacion-medicina/'],
+  video1:{
+    title:'La Ouija',
+    category:'Documental / 2025',
+    description:'Proyecto académico que representa la comunicación con un supuesto ente del más allá mediante una sesión de ouija, con el objetivo de investigar y descubrir cómo se fundó el centro educativo.',
+    contribution:'Dirección de arte · Diseño gráfico · Fotografía · Grabación · Edición de vídeo · Retoque · Transiciones · Intro · Noticiero · Créditos · Efectos de sonido · Edición musical',
+    software:'Premiere · After Effects',
+    concept:`La Ouija nace como una propuesta inspirada en películas como REC y La bruja de Blair, especialmente por su manera de representar experiencias paranormales desde una perspectiva en primera persona. La historia está protagonizada por dos amigos que se enfrentan a una situación aparentemente sobrenatural, manteniendo una interpretación naturalista y realista. El proyecto combina la tensión de la situación con el humor propio de la relación entre los personajes, creando un contraste entre lo paranormal y su manera espontánea de afrontar lo que está ocurriendo.`,
+    folder:'images/proyectos/video/la-ouija/'
+  },
+  video2:{
+    title:'BreakDance',
+    category:'Vídeo recopilatorio / 2026',
+    description:'Práctica laboral centrada en la grabación de un evento juvenil de breakdance, posteriormente presentado mediante un vídeo recopilatorio que recoge los mejores momentos y el ambiente vivido durante la jornada.',
+    contribution:'Grabación · Edición de vídeo · Montaje',
+    software:'Premiere',
+    concept:`El proyecto recoge diferentes presentaciones realizadas por una escuela de baile, mostrando una parte de cada uno de los grupos participantes. La pieza busca transmitir la energía y diversidad del evento y culmina con la competición final, poniendo especial énfasis en los participantes que resultaron ganadores.`,
+    folder:'images/proyectos/video/breackdance/'
+  },
+  video3:{
+    title:'Boda',
+    category:'Vídeo resumen / 2026',
+    description:'Práctica laboral destinada a crear un vídeo resumen con los momentos más destacados de una boda, desde la preparación de las novias hasta la ceremonia y su despedida en el altar.',
+    contribution:'Montaje · Edición de vídeo',
+    software:'Premiere',
+    concept:`Resumen dinámico de una boda construido al ritmo de una canción de ABBA. La edición recorre los diferentes momentos de la celebración, comenzando con la preparación de las novias y avanzando hasta los momentos finales de la ceremonia, buscando transmitir de forma ágil y emotiva la evolución de todo el día.`,
+    folder:'images/proyectos/video/graduacion-medicina/'
+  },
   imagen1:['Memories of Love','Edición de imagen','Proyecto de tratamiento y edición fotográfica.',['Photoshop','Retoque'],'images/proyectos/edicion-imagen/memories-of-love/'],
   imagen2:['Sons of Zeus','Edición de imagen','Proyecto de transformación y tratamiento visual.',['Photoshop','Color'],'images/proyectos/edicion-imagen/sons-of-zeus/'],
   imagen3:['Traces of Life','Edición de imagen','Proyecto de edición y retoque fotográfico.',['Photoshop','Lightroom'],'images/proyectos/edicion-imagen/traces-of-life/'],

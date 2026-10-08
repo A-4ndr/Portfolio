@@ -1,25 +1,21 @@
 const data={
-  campana:['Cali se Mueve','Campaña / 2021','Al realizar este proyecto se busca que las entidades encargadas de todo lo relacionado con el ámbito cultural de la Ciudad de Cali tengan un espacio de divulgación que se centre en la promoción y publicidad de eventos programados dentro de un determinado periodo de tiempo, cuya prioridad sea dar información relevante y actualizada sobre todos los acontecimientos relacionados con las artes en Cali para garantizar un espacio confiable y creativo que permita conocer las apuestas culturales de la ciudad avaladas por entidades gubernamentales.',['Dirección creativa','Diseño','Comunicación cultural','2021'],'images/proyectos/campanas/cali-se-mueve/'],
-  campana2:['Cali se Mueve 2','Campaña','Segundo proyecto de la serie Cali se Mueve.',['Campaña','Diseño','Comunicación cultural'],'images/proyectos/campanas/cali-se-mueve-2/'],
-  campana3:['Tanuki Creativo','Campaña','Proyecto desarrollado para Tanuki Creativo.',['Dirección de arte','Diseño','Branding'],'images/proyectos/campanas/tanuki-creativo/'],
+  campana:{title:'Cali se Mueve',category:'Campaña publicitaria / 2021',description:`Al realizar este proyecto se buscó que las entidades encargadas de todo lo relacionado con el ámbito cultural de la ciudad de Cali tuvieran un espacio de divulgación centrado en la promoción y publicidad de eventos programados. La propuesta busca ofrecer información relevante y actualizada sobre acontecimientos relacionados con las artes en Cali, creando un medio confiable y creativo para dar a conocer las apuestas culturales avaladas por entidades gubernamentales. A largo plazo, se plantea fortalecer el posicionamiento de la página web como principal medio de información sobre eventos culturales, favoreciendo una mayor participación de la comunidad y una mayor interacción en plataformas digitales.`,contribution:'Dirección creativa · Diseño · Comunicación cultural',software:'No especificado',concept:`Cali se Mueve nace de la identidad de Cali como la Sucursal del Cielo y capital mundial de la salsa. El concepto parte de representar una ciudad que está constantemente en movimiento a través de sus diferentes expresiones culturales. Esta idea se trasladó a la campaña mediante una propuesta gráfica expresiva, apoyada en el uso del color y en diferentes frases y expresiones propias de la región del Valle del Cauca.`,folder:'images/proyectos/campanas/cali-se-mueve/'},
+  campana2:{title:'Cali se Mueve 2',category:'Campaña publicitaria / 2021',description:'Trabajo académico orientado a promover la cultura en Cali mediante una página web dedicada a la difusión de distintos eventos culturales que tenían lugar en la ciudad.',contribution:'Dirección de arte · Diseño gráfico · Ilustración · Creación de copys · Conceptualización',software:'Photoshop · Illustrator',concept:`Lo que más destaca de la campaña creativa, tanto en sus aplicaciones impresas como en redes sociales, son las ilustraciones que representan diferentes aves típicas de la ciudad de Cali. Estas ilustraciones se combinan con frases y expresiones tradicionales propias de las costumbres caleñas, buscando conectar la propuesta visual con la identidad cultural de la ciudad y generar una comunicación cercana, reconocible y representativa.`,folder:'images/proyectos/campanas/cali-se-mueve-2/'},
+  campana3:{title:'Tanuki Creativo',category:'Identidad visual / 2021',description:'Trabajo académico que consistía en crear una agencia de diseño gráfico, desarrollando una identidad visual capaz de transmitir creatividad, adaptabilidad y versatilidad.',contribution:'Conceptualización · Vectorización del logo · Identidad visual',software:'Illustrator',concept:`El concepto de Tanuki Creativo parte del tanuki de la cultura japonesa, un ser asociado con la alegría, la picardía y la capacidad de transformarse. Estas características se trasladaron al ámbito del diseño gráfico como una representación de la adaptabilidad y versatilidad, entendiendo que una agencia debe ser capaz de adaptarse a diferentes proyectos, estilos y necesidades. Además, el tanuki está tradicionalmente relacionado con la prosperidad y la buena fortuna, conceptos que también forman parte de la identidad de la marca.`,folder:'images/proyectos/campanas/tanuki-creativo/'},
 
   foto1:['Savaje','Fotomontaje','Proyecto de composición y manipulación fotográfica.',['Photoshop','Composición','Retoque'],'images/proyectos/fotomontaje/savaje/'],
   foto2:['The life is a videogame','Fotomontaje','Proyecto visual basado en la creación de una composición fotográfica.',['Photoshop','Composición'],'images/proyectos/fotomontaje/the-life-is-a-videogame/'],
   foto3:['Outside the frame','Fotomontaje','Proyecto de manipulación y composición fotográfica.',['Photoshop','Retoque'],'images/proyectos/fotomontaje/outside-the-frame/'],
-
   video1:['La Ouija','Vídeo / Postproducción','Proyecto audiovisual de edición y postproducción.',['Premiere Pro','After Effects','Color'],'images/proyectos/video/la-ouija/'],
   video2:['BreackDance','Edición','Proyecto audiovisual centrado en ritmo, montaje y narrativa.',['Premiere Pro','Edición'],'images/proyectos/video/breackdance/'],
   video3:['Boda','Edición','Proyecto audiovisual de boda y edición de vídeo.',['Premiere Pro','Edición'],'images/proyectos/video/graduacion-medicina/'],
-
   imagen1:['Memories of Love','Edición de imagen','Proyecto de tratamiento y edición fotográfica.',['Photoshop','Retoque'],'images/proyectos/edicion-imagen/memories-of-love/'],
   imagen2:['Sons of Zeus','Edición de imagen','Proyecto de transformación y tratamiento visual.',['Photoshop','Color'],'images/proyectos/edicion-imagen/sons-of-zeus/'],
   imagen3:['Traces of Life','Edición de imagen','Proyecto de edición y retoque fotográfico.',['Photoshop','Lightroom'],'images/proyectos/edicion-imagen/traces-of-life/'],
-
   pieza1:['Copa Airlines','Pieza gráfica','Pieza gráfica desarrollada para comunicación visual.',['Illustrator','Photoshop','Diseño'],'images/proyectos/piezas-graficas/copa-airlines/'],
   pieza2:['Cali se Mueve','Pieza gráfica','Piezas de comunicación vinculadas al proyecto Cali se Mueve.',['Diseño','Comunicación'],'images/proyectos/piezas-graficas/cali-se-mueve/'],
   pieza3:['Real Steel','Pieza gráfica','Proyecto centrado en diseño y composición para impresión.',['Diseño gráfico','Impresión'],'images/proyectos/piezas-graficas/impresion/'],
   pieza4:['Logos','Pieza gráfica','Piezas de identidad y comunicación para Tanuki Creativo.',['Branding','Identidad','Diseño'],'images/proyectos/piezas-graficas/tanuki-creativo/'],
-
   illu1:['One Line, One Story','Ilustración digital','Proyecto de ilustración digital y exploración gráfica.',['Digital Art','Ilustración'],'images/proyectos/ilustracion/one-line-one-story/'],
   illu2:['Space Love','Character design','Diseño y desarrollo visual de personajes.',['Space Love','Digital Art'],'images/proyectos/ilustracion/character-design/']
 };
@@ -243,10 +239,17 @@ function openProject(el){
   const p=data[el.dataset.project];
   if(!p) return;
 
-  title.textContent=p[0];
-  cat.textContent=p[1];
-  desc.textContent=p[2];
-  tags.innerHTML=p[3].map(x=>'<span>'+escapeHtml(x)+'</span>').join('');
+  if(Array.isArray(p)) {
+    title.textContent=p[0];
+    cat.textContent=p[1];
+    desc.textContent=p[2];
+    tags.innerHTML=p[3].map(x=>'<span>'+escapeHtml(x)+'</span>').join('');
+  }else{
+    title.textContent=p.title;
+    cat.textContent=p.category;
+    desc.innerHTML='<div class=\"project-detail-block\"><p>'+escapeHtml(p.description)+'</p><div class=\"project-details\"><div><small>MI APORTACIÓN</small><p>'+escapeHtml(p.contribution)+'</p></div><div><small>SOFTWARE</small><p>'+escapeHtml(p.software)+'</p></div></div><div class=\"project-concept\"><small>CONCEPTO</small><p>'+escapeHtml(p.concept)+'</p></div></div>';
+    tags.innerHTML='';
+  }
 
   currentImages=[];
   currentIndex=0;
@@ -256,7 +259,7 @@ function openProject(el){
   modal.setAttribute('aria-hidden','false');
   document.body.style.overflow='hidden';
 
-  loadProjectGallery(p[4]);
+  loadProjectGallery(Array.isArray(p)?p[4]:p.folder);
 }
 
 function closeProjectModal(){

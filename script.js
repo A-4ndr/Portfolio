@@ -329,3 +329,23 @@ document.addEventListener('keydown',e=>{
     if(e.key==='ArrowRight') moveCarousel(1);
   }
 });
+
+// Phase 1 + 2 motion: cinematic intro, section reveals, project-card reveals and hover polish.
+// No external libraries; all motion respects reduced-motion preferences.
+(function initCinematicMotion(){
+  document.body.classList.add('motion-enabled');
+  const revealTargets = document.querySelectorAll('.section .heading, .about, .section .project');
+  if (!('IntersectionObserver' in window)) {
+    revealTargets.forEach(el => el.classList.add('is-visible'));
+    return;
+  }
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -4% 0px' });
+  revealTargets.forEach(el => revealObserver.observe(el));
+})();

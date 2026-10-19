@@ -743,3 +743,30 @@ body.motion-enabled .section .project:nth-child(4) { transition-delay: .18s; }
     transform: none !important;
   }
 }
+
+
+/* =========================================================
+   PHASE 4 — SUBTLE CINEMATIC PARALLAX
+   Slow background drift adds depth without moving content.
+   ========================================================= */
+.section:before {
+  background-position: center calc(50% + var(--parallax-offset, 0px));
+  transition: background-position .12s linear;
+}
+.about:before {
+  background-position: center calc(50% + var(--parallax-offset, 0px));
+}
+/* A restrained depth cue on cards, without changing their layout. */
+.project .project-cover {
+  transition: background-color .45s ease, box-shadow .45s ease;
+}
+.project:hover .project-cover {
+  box-shadow: 0 14px 34px rgba(0,0,0,.18);
+}
+@media (prefers-reduced-motion: reduce) {
+  .section:before, .about:before {
+    background-position: center !important;
+    transition: none !important;
+  }
+  .project:hover .project-cover { box-shadow: none !important; }
+}

@@ -349,3 +349,36 @@ document.addEventListener('keydown',e=>{
   }, { threshold: 0.12, rootMargin: '0px 0px -4% 0px' });
   revealTargets.forEach(el => revealObserver.observe(el));
 })();
+
+
+// Phase 4: subtle background parallax. Content stays still; only section photography drifts.
+(function initCinematicParallax(){
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) return;
+  const targets = Array.from(document.querySelectorAll('.section, .about'));
+  if (!targets.length) return;
+  let framePending = false;
+  const updateParallax = () => {
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    targets.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.bottom < -100 || rect.top > viewportHeight + 100) {
+        section.style.setProperty('--parallax-offset', '0px');
+        return;
+      }
+      const sectionCenter = rect.top + rect.height / 2;
+      const distanceFromCenter = (sectionCenter - viewportHeight / 2) / Math.max(viewportHeight, 1);
+      const offset = Math.max(-18, Math.min(18, distanceFromCenter * -24));
+      section.style.setProperty('--parallax-offset', offset.toFixed(2) + 'px');
+    });
+    framePending = false;
+  };
+  const requestUpdate = () => {
+    if (framePending) return;
+    framePending = true;
+    window.requestAnimationFrame(updateParallax);
+  };
+  window.addEventListener('scroll', requestUpdate, {passive:true});
+  window.addEventListener('resize', requestUpdate, {passive:true});
+  updateParallax();
+})();

@@ -770,3 +770,93 @@ body.motion-enabled .section .project:nth-child(4) { transition-delay: .18s; }
   }
   .project:hover .project-cover { box-shadow: none !important; }
 }
+
+/* =========================================================
+   PHASE 5 — MICROINTERACTIONS & FINISHING DETAILS
+   Restrained feedback for navigation, controls and project cards.
+   ========================================================= */
+.site-header nav a {
+  position: relative;
+  text-decoration: none;
+  transition: color .28s ease, opacity .28s ease;
+}
+.site-header nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 1px;
+  background: var(--accent, #c7a2b7);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .32s cubic-bezier(.2,.7,.2,1);
+}
+.site-header nav a:hover::after,
+.site-header nav a:focus-visible::after {
+  transform: scaleX(1);
+}
+.site-header nav a:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 1px solid rgba(220, 205, 215, .72);
+  outline-offset: 5px;
+}
+button,
+.carousel-arrow,
+.image-lightbox-close,
+.video-media button {
+  transition: color .25s ease, background-color .25s ease, border-color .25s ease,
+              transform .3s cubic-bezier(.2,.7,.2,1), opacity .25s ease;
+}
+.video-media button:hover {
+  border-color: #eee;
+  background: rgba(255,255,255,.07);
+  transform: scale(1.045);
+}
+.project .project-cover {
+  overflow: hidden;
+  transform: translateZ(0);
+  transition: box-shadow .45s ease, border-color .35s ease;
+}
+.project:hover .project-cover,
+.project:focus-visible .project-cover {
+  box-shadow: 0 16px 38px rgba(0,0,0,.22);
+}
+.project .info h3 {
+  transition: color .28s ease, letter-spacing .28s ease, transform .3s ease;
+}
+.project:hover .info h3,
+.project:focus-visible .info h3 {
+  letter-spacing: .015em;
+}
+.carousel-arrow:hover,
+.image-lightbox-close:hover {
+  background-color: rgba(255,255,255,.09);
+  border-color: rgba(255,255,255,.7);
+}
+.carousel-dot {
+  transform-origin: center;
+}
+.carousel-dot:focus-visible {
+  outline: 1px solid #ddd;
+  outline-offset: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-header nav a,
+  .site-header nav a::after,
+  button,
+  .carousel-arrow,
+  .image-lightbox-close,
+  .video-media button,
+  .project .project-cover,
+  .project .info h3,
+  .carousel-dot {
+    transition: none !important;
+  }
+  .site-header nav a::after { transform: none !important; }
+  .project:hover .project-cover,
+  .project:focus-visible .project-cover,
+  .video-media button:hover,
+  .carousel-dot:hover { transform: none !important; box-shadow: none !important; }
+}

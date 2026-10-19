@@ -7,7 +7,7 @@ html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:Manrope,Arial,sans-serif;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 .site-header{position:fixed;z-index:50;top:0;width:100%;padding:24px var(--pad);display:flex;justify-content:space-between;align-items:center;background:linear-gradient(#080808dd,transparent);backdrop-filter:blur(8px)}
-.logo{font-weight:800;letter-spacing:-.05em}.logo span{font-weight:400}
+.logo{display:inline-flex;align-items:center;gap:10px;min-height:34px;font-weight:800;letter-spacing:-.05em;flex-shrink:0}.logo img{display:block;width:58px;height:auto;max-height:30px;object-fit:contain;opacity:.88;transition:opacity .25s ease}.logo span{font-weight:400;font:500 .55rem "DM Mono",monospace;letter-spacing:.12em;color:#aaa}.logo:hover img,.logo:focus-visible img{opacity:1}
 .site-header nav{display:flex;gap:22px;font:500 .61rem "DM Mono",monospace;text-transform:uppercase}
 .site-header nav a{color:#aaa;transition:.25s}.site-header nav a:hover{color:var(--accent)}
 .menu-toggle{display:none;background:none;border:0}.menu-toggle i{display:block;width:25px;height:1px;background:#fff;margin:6px}
@@ -892,3 +892,7 @@ button,
 .project-cover-image {
   backface-visibility: hidden;
 }
+
+/* NDR personal mark — deliberately restrained and non-intrusive */
+@media(max-width:600px){.logo{gap:8px}.logo img{width:48px;max-height:25px}.logo span{font-size:.5rem}}
+@media(prefers-reduced-motion:reduce){.logo img{transition:none}}

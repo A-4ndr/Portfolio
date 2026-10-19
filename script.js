@@ -86,8 +86,9 @@ function openImageLightbox(src,alt){
   }
 
   const image=lightbox.querySelector('.image-lightbox-image');
-  image.src=src;
   image.alt=alt||'';
+  image.decoding='async';
+  image.src=src;
   lightbox.classList.add('open');
   document.body.style.overflow='hidden';
 }
@@ -144,6 +145,7 @@ function renderCarousel(baseUrl){
       el.className='carousel-image'+(i===currentIndex?' active':'');
       el.src=new URL(media.name,currentGalleryBaseUrl).href;
       el.loading=i===0?'eager':'lazy';
+      el.decoding='async';
       el.title='Haz clic para ampliar';
       el.tabIndex=0;
       el.addEventListener('click',e=>{
@@ -203,7 +205,7 @@ async function loadProjectGallery(folder){
   const manifestUrl=new URL('gallery.json',projectUrl);
 
   try{
-    const response=await fetch(manifestUrl.href+'?v='+Date.now(),{cache:'no-store'});
+    const response=await fetch(manifestUrl.href,{cache:'default'});
     if(!response.ok) throw new Error('HTTP '+response.status);
 
     const manifest=await response.json();
@@ -298,6 +300,8 @@ document.querySelectorAll('[data-cover]').forEach(el=>{
   const img=document.createElement('img');
   img.src=el.dataset.cover;
   img.alt='';
+  img.loading='lazy';
+  img.decoding='async';
   img.className='project-cover-image';
   img.onerror=()=>img.remove();
   el.prepend(img);

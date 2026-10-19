@@ -860,3 +860,35 @@ button,
   .video-media button:hover,
   .carousel-dot:hover { transform: none !important; box-shadow: none !important; }
 }
+
+/* =========================================================
+   PHASE 6 — FINAL POLISH & RESPONSIVE PERFORMANCE
+   Avoid expensive scroll effects on small screens and make
+   touch interactions predictable without changing the design.
+   ========================================================= */
+@media (max-width: 700px) {
+  .section:before,
+  .about:before {
+    background-position: center !important;
+    transition: none !important;
+  }
+  .project:hover .project-cover,
+  .project:focus-visible .project-cover {
+    box-shadow: none;
+  }
+}
+@media (hover: none) {
+  .project:hover .project-cover-image,
+  .project:hover .info h3,
+  .video-media button:hover {
+    transform: none;
+  }
+  .project:hover .project-cover,
+  .project:hover .media strong,
+  .project:hover .video-media strong {
+    box-shadow: none;
+  }
+}
+.project-cover-image {
+  backface-visibility: hidden;
+}
